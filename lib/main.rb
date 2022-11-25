@@ -24,10 +24,10 @@ def menu
   input = gets.chomp
   if input == '1'
     # new game
-    Game.new().new_game
+    Game.new.new_game
   elsif input == '2'
     # load game
-    Game.new().load_game
+    Game.new.load_game
   else
     puts message_invalid_input
     menu

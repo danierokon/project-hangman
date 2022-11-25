@@ -1,26 +1,26 @@
 require_relative 'messages'
 require_relative 'display'
 require 'json'
-# 
+#
 # menu -> new game -> load dictionary/code -> gameplay loop -> result?
 class Game
   include Messages
-  def initialize(code = '', chances = 7, progress = [], guessed_char = Array.new)
+  def initialize(code = '', chances = 7, progress = [], guessed_char = [])
     @code = code
     @chances = chances
     @progress = progress
-    @guessed_char = guessed_char #guessed =/= progress as they can be wrong
+    @guessed_char = guessed_char # guessed =/= progress as they can be wrong
     @display = nil
   end
-  
+
   def new_game
     @code = select_random_word[0]
     @chances = 7
-    @progress = Array.new(@code.length){'_'}
+    @progress = Array.new(@code.length) { '_' }
     @display = Display.new(@code, @progress, @guessed_char)
     gaming
   end
-  
+
   def load_game
     puts message_choose_save_slots
     slot = slot_input_check
@@ -41,7 +41,8 @@ class Game
   def slot_input_check
     # only 1/2/3 allowed
     input = gets.chomp
-    return input if ['1', '2', '3'].include?(input)
+    return input if %w[1 2 3].include?(input)
+
     puts message_invalid_input
     slot_input_check
   end
@@ -54,11 +55,11 @@ class Game
     path = "saves/#{slot}.json"
     File.open(path, 'w') do |save|
       JSON.dump({
-        :code => @code,
-        :chances => @chances,
-        :progress => @progress,
-        :guessed_char => @guessed_char
-      }, save)
+                  code: @code,
+                  chances: @chances,
+                  progress: @progress,
+                  guessed_char: @guessed_char
+                }, save)
     end
   end
 
@@ -76,9 +77,9 @@ class Game
   def select_random_word
     words = File.readlines('google-10000-english-no-swears.txt', chomp: true)
     words.select! do |word|
-      true if (5..12).include? word.length 
+      true if (5..12).include? word.length
     end
-    return words.sample(1)
+    words.sample(1)
   end
 
   def guess_input_check(input)
@@ -87,17 +88,17 @@ class Game
       puts message_save_game
       return true
     end
-    if input.length == 1 && input.match?(/[a-z]{1}/)      
+    if input.length == 1 && input.match?(/[a-z]{1}/)
       if @guessed_char.include?(input)
         puts message_dupe_guess
-        return false
+        false
       else
         @guessed_char.push(input) unless @guessed_char.include?(input)
-        return true
+        true
       end
     else
       puts message_invalid_input
-      return false
+      false
     end
   end
 
@@ -105,9 +106,7 @@ class Game
     code_array = @code.split('')
     @chances -= 1 unless code_array.include? input
     code_array.each_with_index do |char, index|
-      if char == input
-        @progress[index].replace(char)
-      end
+      @progress[index].replace(char) if char == input
     end
   end
 
@@ -120,29 +119,30 @@ class Game
       puts message_lost
       return true
     end
-    if input == 'save'
-      return true
-    end
+    return unless input == 'save'
+
+    true
   end
 
   def gaming
     game_over = false
     until game_over == true
       puts message_gameplay
-      puts message_chance_left (@chances)
+      puts message_chance_left(@chances)
       # puts @code
-      @display.on_screen      
+      @display.on_screen
       puts "  (Length of word is #{@code.length})"
       puts @display.guessed
       input = gets.chomp.downcase
       next unless guess_input_check(input)
+
       update_progress(input)
       game_over = game_status_check(input)
     end
-    unless input == 'save'
-      print 'You guessed : '
-      @display.on_screen
-      puts "\n" + message_reveal(@code)
-    end
+    return if input == 'save'
+
+    print 'You guessed : '
+    @display.on_screen
+    puts "\n" + message_reveal(@code)
   end
 end

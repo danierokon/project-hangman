@@ -1,4 +1,3 @@
-
 class Display
   def initialize(code, progress, guessed_char)
     @code = code
@@ -7,15 +6,13 @@ class Display
   end
 
   def on_screen
-    @progress.each {|char| print char + " "}
+    @progress.each { |char| print char + ' ' }
   end
 
   def guessed
-    if @guessed_char[0].nil?
-      return ''
-    else      
-      list = @guessed_char.join(' ')
-      return "These are the letters you guessed: #{list}"
-    end
+    return '' if @guessed_char[0].nil?
+
+    list = @guessed_char.join(' ')
+    "These are the letters you guessed: #{list}"
   end
 end

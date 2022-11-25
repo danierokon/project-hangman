@@ -1,11 +1,11 @@
-module Messages    
+module Messages
   # "\e[31m#{self}\e[0m" red text
   def message_intro
-    "Hello, welcome to Hangman! (without man to hang)"
+    'Hello, welcome to Hangman! (without man to hang)'
   end
 
   def message_quit
-    "Goodbye!"
+    'Goodbye!'
   end
 
   def message_menu
@@ -13,28 +13,29 @@ module Messages
   end
 
   def message_invalid_input
-    "\e[31m#{"Invalid input!"}\e[0m"
+    "\e[31mInvalid input!\e[0m"
   end
 
   def message_dupe_guess
-    "\e[31m#{"You already guessed that letter!\nTry something else!"}\e[0m"
+    "\e[31mYou already guessed that letter!
+Try something else!\e[0m"
   end
 
   def message_gameplay
-    "Submit your guesses by entering a single valid character."
+    'Submit your guesses by entering a single valid character.'
   end
 
-  def message_chance_left (chance)
+  def message_chance_left(chance)
     return "You have #{chance} chances left" if chance > 1
-    return "\e[31m#{"This is your last chance!"}\e[0m" if chance == 1
+    return "\e[31mThis is your last chance!\e[0m" if chance == 1
   end
 
   def message_win
-    "\e[35m#{'You win!'}\e[0m"
+    "\e[35mYou win!\e[0m"
   end
 
   def message_lost
-    "\e[31m#{'No more chances, you lost!'}\e[0m"
+    "\e[31mNo more chances, you lost!\e[0m"
   end
 
   def message_reveal(code)
@@ -42,18 +43,18 @@ module Messages
   end
 
   def message_replay
-    "New game? (y/n)"
+    'New game? (y/n)'
   end
 
   def message_choose_save_slots
-    "Choose a save slot (1/2/3)"
+    'Choose a save slot (1/2/3)'
   end
 
   def message_save_game
-    "Game saved!"
+    'Game saved!'
   end
 
   def message_no_save_found
-    "No save file in destinated slot exists."
+    'No save file in destinated slot exists.'
   end
 end
