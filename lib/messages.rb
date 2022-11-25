@@ -41,7 +41,7 @@ module Messages
     "The secret word is #{code}!"
   end
 
-  def message_back_to_menu
-    "Press enter to go back to menu."
+  def message_replay
+    "Play again? (y/n)"
   end
 end

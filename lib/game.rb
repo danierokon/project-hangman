@@ -21,7 +21,7 @@ class Game
       @code = select_random_word[0]
       @chances = 7
       @progress = Array.new(@code.length){'_'}
-      @display = Display.new(@code, @progress)
+      @display = Display.new(@code, @progress, @guessed_char)
       gaming
     elsif input == '2'
       # load game
@@ -84,18 +84,18 @@ class Game
       puts message_gameplay
       puts message_chance_left (@chances)
         puts @code
-        @display.on_screen
+      @display.on_screen      
       puts "  (Length of word is #{@code.length})"
+      puts @display.guessed
       input = gets.chomp.downcase
       next unless guess_input_check(input)
       update_progress(input)
       game_over = game_status_check
     end
+    print 'You guessed : '
     @display.on_screen
     puts "\n" + message_reveal(@code)    
-    puts message_back_to_menu
-    gets
-    menu
+    puts message_replay    
   end
 
 end
