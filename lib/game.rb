@@ -127,6 +127,7 @@ class Game
   def gaming
     game_over = false
     until game_over == true
+      puts message_save_tips
       puts message_gameplay
       puts message_chance_left(@chances)
       # puts @code

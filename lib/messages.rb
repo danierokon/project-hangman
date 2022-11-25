@@ -57,4 +57,8 @@ Try something else!\e[0m"
   def message_no_save_found
     'No save file in destinated slot exists.'
   end
+
+  def message_save_tips
+    "\e[36m#{"You can save the game's state by inputting 'save'"}\e[0m"
+  end
 end
