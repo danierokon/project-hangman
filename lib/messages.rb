@@ -42,6 +42,18 @@ module Messages
   end
 
   def message_replay
-    "Play again? (y/n)"
+    "New game? (y/n)"
+  end
+
+  def message_choose_save_slots
+    "Choose a save slot (1/2/3)"
+  end
+
+  def message_save_game
+    "Game saved!"
+  end
+
+  def message_no_save_found
+    "No save file in destinated slot exists."
   end
 end

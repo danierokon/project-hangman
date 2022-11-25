@@ -5,6 +5,7 @@ require_relative 'messages'
 include Messages
 
 def replay_check
+  puts message_replay
   input = gets.chomp.downcase
   case input
   when 'y'
