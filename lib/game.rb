@@ -1,37 +1,40 @@
 require_relative 'messages'
 require_relative 'display'
+require 'json'
 # 
 # menu -> new game -> load dictionary/code -> gameplay loop -> result?
 class Game
   include Messages
-  def initialize(code = '', chances = 7, progress = [])
+  def initialize(code = '', chances = 7, progress = [], guessed_char = Array.new)
     @code = code
     @chances = chances
     @progress = progress
-    @guessed_char = Array.new #guessed =/= progress as they can be wrong
+    @guessed_char = guessed_char #guessed =/= progress as they can be wrong
     @display = nil
   end
   
-  def menu
-    puts message_intro
-    puts message_menu
-    input = gets.chomp
-    if input == '1'
-      # new game
-      @code = select_random_word[0]
-      @chances = 7
-      @progress = Array.new(@code.length){'_'}
-      @display = Display.new(@code, @progress, @guessed_char)
-      gaming
-    elsif input == '2'
-      # load game
-    elsif input == '3'
-      # quit game
-      puts message_quit
-    else
-      puts message_invalid_input
-      menu
-    end
+  def new_game
+    @code = select_random_word[0]
+    @chances = 7
+    @progress = Array.new(@code.length){'_'}
+    @display = Display.new(@code, @progress, @guessed_char)
+    gaming
+  end
+  
+  def load_game
+    puts "load game temp"
+  end
+
+  def save_game
+
+  end
+
+  def self.to_json(string)
+
+  end
+
+  def self.from_json(string)
+
   end
 
   def select_random_word
@@ -95,7 +98,7 @@ class Game
     print 'You guessed : '
     @display.on_screen
     puts "\n" + message_reveal(@code)    
-    puts message_replay    
+    puts message_replay
   end
 
 end

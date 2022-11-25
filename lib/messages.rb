@@ -9,7 +9,7 @@ module Messages
   end
 
   def message_menu
-    "1. New Game\n2. Load Game\n3. Quit"
+    "1. New Game\n2. Load Game"
   end
 
   def message_invalid_input
